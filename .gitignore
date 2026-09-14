@@ -1,0 +1,32 @@
+# Environment
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Large data files (not tracked in git)
+data/raw/
+data/processed/*.parquet
+data/processed/*.pkl
+data/processed/*.csv
+
+# Reports (generated at runtime)
+reports/eval_results.json
+reports/eval_report.md
+
+# IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb

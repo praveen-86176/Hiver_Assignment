@@ -1,0 +1,593 @@
+{
+  "n_samples": 25,
+  "judge_model": "qwen/qwen3.8-27b",
+  "pearson_r": 0.87,
+  "pearson_p_value": 1.584056745514482e-08,
+  "spearman_rho": 0.647,
+  "mean_absolute_error": 0.84,
+  "within_1_point_agreement_rate": 0.72,
+  "exact_agreement_rate": 0.28,
+  "dimension_pearson_correlations": {
+    "empathy": 0.686,
+    "actionability": 0.879,
+    "brand_voice": 0.816,
+    "relevance": 0.82
+  },
+  "details": [
+    {
+      "id": 1,
+      "customer": "@AppleSupport my battery dies in 2 hours on iPhone 7 after iOS 11 update.",
+      "reply": "We understand how frustrating rapid battery drain can be. Please check Settings > Battery for app usage, or DM us so we can troubleshoot together.",
+      "human_overall": 5.0,
+      "judge_overall": 4.0,
+      "diff": 1.0,
+      "human_scores": {
+        "empathy": 5,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 5.0
+      },
+      "judge_scores": {
+        "empathy": 4,
+        "actionability": 3,
+        "brand_voice": 5,
+        "relevance": 4,
+        "comment": "The reply is empathetic and on-brand, but the suggested action of checking battery usage is generic and less effective for a known post-update issue than suggesting a battery health check or reset.",
+        "overall": 4.0
+      }
+    },
+    {
+      "id": 2,
+      "customer": "@AppleSupport I got charged twice for my iCloud storage this month.",
+      "reply": "Thanks for contacting Apple Support. Please DM us your Apple ID email so our billing specialists can verify the charges and issue a refund.",
+      "human_overall": 4.75,
+      "judge_overall": 3.75,
+      "diff": 1.0,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 4,
+        "relevance": 5,
+        "comment": "The reply is professional and directly addresses the billing issue with a clear next step, but it lacks a warm acknowledgment of the customer's frustration regarding the double charge.",
+        "overall": 3.75
+      }
+    },
+    {
+      "id": 3,
+      "customer": "@AppleSupport my iPhone is completely frozen on the Apple logo screen.",
+      "reply": "We can help. Try force restarting by holding the Volume Down + Power buttons for 10 seconds. DM us if it remains stuck.",
+      "human_overall": 4.75,
+      "judge_overall": 4.0,
+      "diff": 0.75,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 5,
+        "brand_voice": 4,
+        "relevance": 5,
+        "comment": "The reply provides the correct technical solution and maintains a professional tone, but lacks a warm acknowledgment of the customer's frustration with the frozen device.",
+        "overall": 4.0
+      }
+    },
+    {
+      "id": 4,
+      "customer": "@AppleSupport why does my phone suck so bad?",
+      "reply": "We'd love to help turn things around. Could you let us know what model you have and what specific issue you're experiencing?",
+      "human_overall": 4.25,
+      "judge_overall": 4.25,
+      "diff": 0.0,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 4,
+        "brand_voice": 5,
+        "relevance": 4,
+        "overall": 4.25
+      },
+      "judge_scores": {
+        "empathy": 4,
+        "actionability": 4,
+        "brand_voice": 5,
+        "relevance": 4,
+        "comment": "The reply is professional and concise, effectively de-escalating the frustration by asking for specific details to provide a targeted solution.",
+        "overall": 4.25
+      }
+    },
+    {
+      "id": 5,
+      "customer": "@AppleSupport AirDrop is not finding any nearby devices after update.",
+      "reply": "Let's get AirDrop working again. Make sure Wi-Fi and Bluetooth are enabled on both devices and Receiving is set to Everyone. DM us if needed.",
+      "human_overall": 4.75,
+      "judge_overall": 3.0,
+      "diff": 1.75,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 3,
+        "brand_voice": 3,
+        "relevance": 4,
+        "comment": "The reply is concise and relevant but lacks the warm, empathetic tone typical of Apple Support and offers only basic troubleshooting steps without acknowledging the specific post-update context.",
+        "overall": 3.0
+      }
+    },
+    {
+      "id": 6,
+      "customer": "@AppleSupport I hate this new update it ruined my entire phone fix it now!",
+      "reply": "Please DM us.",
+      "human_overall": 1.75,
+      "judge_overall": 1.5,
+      "diff": 0.25,
+      "human_scores": {
+        "empathy": 1,
+        "actionability": 2,
+        "brand_voice": 2,
+        "relevance": 2,
+        "overall": 1.75
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 2,
+        "brand_voice": 2,
+        "relevance": 1,
+        "comment": "The reply is dismissive, lacks empathy, and fails to address the specific issue or provide any helpful guidance.",
+        "overall": 1.5
+      }
+    },
+    {
+      "id": 7,
+      "customer": "@AppleSupport how do I back up my photos to iCloud?",
+      "reply": "Go to Settings > [Your Name] > iCloud > Photos and toggle on iCloud Photos to automatically sync your library.",
+      "human_overall": 4.5,
+      "judge_overall": 3.75,
+      "diff": 0.75,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 5,
+        "brand_voice": 4,
+        "relevance": 5,
+        "comment": "The reply is highly actionable and relevant but lacks any empathetic acknowledgment or professional greeting, making it feel abrupt.",
+        "overall": 3.75
+      }
+    },
+    {
+      "id": 8,
+      "customer": "@AppleSupport my screen cracked after dropping it. Is this covered?",
+      "reply": "Accidental damage is not covered under the standard warranty, but AppleCare+ provides reduced service fees. DM us to review your options.",
+      "human_overall": 4.75,
+      "judge_overall": 4.0,
+      "diff": 0.75,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 5,
+        "relevance": 5,
+        "comment": "The reply is professionally concise and directly answers the coverage question, but it lacks a warm acknowledgment of the customer's frustration or misfortune.",
+        "overall": 4.0
+      }
+    },
+    {
+      "id": 9,
+      "customer": "@AppleSupport can I use Apple Pay in Canada?",
+      "reply": "Yes, Apple Pay is supported in Canada with participating banks and cards! Check apple.com/ca/apple-pay for full bank listings.",
+      "human_overall": 4.5,
+      "judge_overall": 4.25,
+      "diff": 0.25,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 3,
+        "actionability": 4,
+        "brand_voice": 5,
+        "relevance": 5,
+        "comment": "The reply is concise, accurate, and directly answers the question with a specific resource, though it lacks a warm greeting or empathetic opening typical of high-quality support interactions.",
+        "overall": 4.25
+      }
+    },
+    {
+      "id": 10,
+      "customer": "@AppleSupport my sound is not working during calls on iPhone 6s.",
+      "reply": "Check out this random link for support: http://randomlink123.com/fix",
+      "human_overall": 1.5,
+      "judge_overall": 1.0,
+      "diff": 0.5,
+      "human_scores": {
+        "empathy": 1,
+        "actionability": 2,
+        "brand_voice": 1,
+        "relevance": 2,
+        "overall": 1.5
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 1,
+        "brand_voice": 1,
+        "relevance": 1,
+        "comment": "The reply is completely unhelpful, provides a suspicious external link instead of official support, and lacks any empathy or specific troubleshooting steps.",
+        "overall": 1.0
+      }
+    },
+    {
+      "id": 11,
+      "customer": "@AppleSupport lost all my business contacts after syncing!",
+      "reply": "We know how critical your contacts are. Check iCloud.com > Account Settings > Restore Contacts to recover an earlier archive.",
+      "human_overall": 5.0,
+      "judge_overall": 4.75,
+      "diff": 0.25,
+      "human_scores": {
+        "empathy": 5,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 5.0
+      },
+      "judge_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "comment": "The reply is concise, professional, and provides the exact technical solution for restoring contacts via iCloud, while briefly acknowledging the severity of the issue.",
+        "overall": 4.75
+      }
+    },
+    {
+      "id": 12,
+      "customer": "@AppleSupport my iPad won't turn on or charge.",
+      "reply": "Try using a different Apple-certified cable and charger, and let it charge for at least 30 minutes. DM us if it still won't power up.",
+      "human_overall": 4.75,
+      "judge_overall": 3.5,
+      "diff": 1.25,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 4,
+        "relevance": 4,
+        "comment": "The reply provides clear, relevant troubleshooting steps but lacks a warm acknowledgment of the customer's frustration, making it feel slightly abrupt.",
+        "overall": 3.5
+      }
+    },
+    {
+      "id": 13,
+      "customer": "@AppleSupport who made iOS 11 it is literally garbage.",
+      "reply": "Our engineers work hard on every update. What seems to be wrong?",
+      "human_overall": 2.75,
+      "judge_overall": 1.75,
+      "diff": 1.0,
+      "human_scores": {
+        "empathy": 2,
+        "actionability": 3,
+        "brand_voice": 3,
+        "relevance": 3,
+        "overall": 2.75
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 2,
+        "brand_voice": 2,
+        "relevance": 2,
+        "comment": "The reply is dismissive and defensive rather than empathetic, and it fails to provide any specific troubleshooting steps or clear next actions.",
+        "overall": 1.75
+      }
+    },
+    {
+      "id": 14,
+      "customer": "@AppleSupport I got locked out of Apple ID.",
+      "reply": "Visit iforgot.apple.com to reset your security credentials, or DM us for guided account recovery.",
+      "human_overall": 4.5,
+      "judge_overall": 3.75,
+      "diff": 0.75,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 4,
+        "relevance": 5,
+        "comment": "The reply is concise and provides the correct solution, but it lacks the warm, empathetic acknowledgment of the customer's frustration expected in high-quality support interactions.",
+        "overall": 3.75
+      }
+    },
+    {
+      "id": 15,
+      "customer": "@AppleSupport why does my camera lag?",
+      "reply": "Make sure your storage isn't completely full in Settings > General > iPhone Storage, and try closing background apps.",
+      "human_overall": 4.25,
+      "judge_overall": 2.75,
+      "diff": 1.5,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 4,
+        "relevance": 5,
+        "overall": 4.25
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 4,
+        "brand_voice": 3,
+        "relevance": 3,
+        "comment": "The reply is overly abrupt and lacks any acknowledgment of the user's frustration, failing to meet the warm and professional tone expected of Apple Support.",
+        "overall": 2.75
+      }
+    },
+    {
+      "id": 16,
+      "customer": "@AppleSupport hey",
+      "reply": "Hello! How can we assist you with your Apple devices today?",
+      "human_overall": 4.0,
+      "judge_overall": 3.5,
+      "diff": 0.5,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 3,
+        "brand_voice": 5,
+        "relevance": 4,
+        "overall": 4.0
+      },
+      "judge_scores": {
+        "empathy": 3,
+        "actionability": 2,
+        "brand_voice": 5,
+        "relevance": 4,
+        "comment": "The reply is professional and on-brand, but it is a generic greeting that does not acknowledge the specific (albeit vague) nature of the customer's initial contact or provide a clear next step beyond asking for details.",
+        "overall": 3.5
+      }
+    },
+    {
+      "id": 17,
+      "customer": "@AppleSupport keyboard typing question mark box for I",
+      "reply": "A software fix has been released in iOS 11.1.1. Go to Settings > General > Software Update to install it.",
+      "human_overall": 4.75,
+      "judge_overall": 2.5,
+      "diff": 2.25,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 4,
+        "brand_voice": 3,
+        "relevance": 2,
+        "comment": "The reply is overly specific and likely outdated (referencing iOS 11.1.1), lacks any empathy or acknowledgment of the user's frustration, and does not address the possibility that the issue is hardware-related or persists on newer OS versions.",
+        "overall": 2.5
+      }
+    },
+    {
+      "id": 18,
+      "customer": "@AppleSupport I will sue Apple in court for damaging my phone!",
+      "reply": "We take this seriously. Please contact Apple Legal or DM us to connect with our senior executive escalations team.",
+      "human_overall": 4.5,
+      "judge_overall": 3.25,
+      "diff": 1.25,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 4,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 3,
+        "brand_voice": 4,
+        "relevance": 4,
+        "comment": "The reply is professional and relevant to the legal threat but lacks genuine empathy or an attempt to resolve the underlying technical issue before escalating to legal channels.",
+        "overall": 3.25
+      }
+    },
+    {
+      "id": 19,
+      "customer": "@AppleSupport need help with macbook trackpad clicking noise.",
+      "reply": "Sorry for the inconvenience. That sounds like a mechanical trackpad issue. Please DM us to schedule a Genius Bar inspection.",
+      "human_overall": 4.75,
+      "judge_overall": 4.5,
+      "diff": 0.25,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 4,
+        "actionability": 4,
+        "brand_voice": 5,
+        "relevance": 5,
+        "comment": "The reply is concise, professional, and directly addresses the specific hardware issue with a clear next step, though it could be slightly warmer in its opening.",
+        "overall": 4.5
+      }
+    },
+    {
+      "id": 20,
+      "customer": "@AppleSupport why did you cancel my order?",
+      "reply": "We understand your concern. Please DM us with your Web Order number and billing postal code so we can check the status.",
+      "human_overall": 4.75,
+      "judge_overall": 4.25,
+      "diff": 0.5,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 4,
+        "comment": "The reply is concise and professional, providing clear next steps, though it lacks a specific apology for the frustration caused by the cancellation.",
+        "overall": 4.25
+      }
+    },
+    {
+      "id": 21,
+      "customer": "@AppleSupport wifi greyed out on iphone 6",
+      "reply": "Try resetting network settings in Settings > General > Reset > Reset Network Settings. If still greyed out, DM us.",
+      "human_overall": 4.5,
+      "judge_overall": 2.5,
+      "diff": 2.0,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 4,
+        "brand_voice": 2,
+        "relevance": 3,
+        "comment": "The reply is overly terse and lacks the warm, professional tone expected of Apple Support, offering a generic fix without acknowledging the user's frustration or providing a clear escalation path.",
+        "overall": 2.5
+      }
+    },
+    {
+      "id": 22,
+      "customer": "@AppleSupport can I trade in my iPhone 6 for iPhone X?",
+      "reply": "Yes! You can check estimated trade-in values at apple.com/shop/trade-in and apply credit towards a new device.",
+      "human_overall": 4.5,
+      "judge_overall": 3.75,
+      "diff": 0.75,
+      "human_scores": {
+        "empathy": 3,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.5
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 4,
+        "relevance": 5,
+        "comment": "The reply is concise and directly answers the question with a specific link, but it lacks the warm, empathetic tone typical of high-quality support interactions.",
+        "overall": 3.75
+      }
+    },
+    {
+      "id": 23,
+      "customer": "@AppleSupport phone won't charge",
+      "reply": "Ok.",
+      "human_overall": 1.0,
+      "judge_overall": 1.0,
+      "diff": 0.0,
+      "human_scores": {
+        "empathy": 1,
+        "actionability": 1,
+        "brand_voice": 1,
+        "relevance": 1,
+        "overall": 1.0
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 1,
+        "brand_voice": 1,
+        "relevance": 1,
+        "comment": "The reply is a single word that provides no acknowledgment, assistance, or professional tone.",
+        "overall": 1.0
+      }
+    },
+    {
+      "id": 24,
+      "customer": "@AppleSupport bluetooth stuttering on beats headphones",
+      "reply": "Let's troubleshoot. Try unpairing and repairing in Bluetooth settings and resetting your Beats. DM us if audio still stutters.",
+      "human_overall": 4.75,
+      "judge_overall": 3.25,
+      "diff": 1.5,
+      "human_scores": {
+        "empathy": 4,
+        "actionability": 5,
+        "brand_voice": 5,
+        "relevance": 5,
+        "overall": 4.75
+      },
+      "judge_scores": {
+        "empathy": 2,
+        "actionability": 4,
+        "brand_voice": 3,
+        "relevance": 4,
+        "comment": "The reply is concise and provides relevant troubleshooting steps, but it lacks the warm, empathetic tone characteristic of Apple Support and uses informal language like 'DM us'.",
+        "overall": 3.25
+      }
+    },
+    {
+      "id": 25,
+      "customer": "@AppleSupport why is the battery so bad",
+      "reply": "Batteries degrade over time. Buy a new phone.",
+      "human_overall": 1.5,
+      "judge_overall": 1.25,
+      "diff": 0.25,
+      "human_scores": {
+        "empathy": 1,
+        "actionability": 2,
+        "brand_voice": 1,
+        "relevance": 2,
+        "overall": 1.5
+      },
+      "judge_scores": {
+        "empathy": 1,
+        "actionability": 1,
+        "brand_voice": 1,
+        "relevance": 2,
+        "comment": "The reply is dismissive, lacks empathy, and fails to provide any diagnostic steps or support options, completely violating professional support standards.",
+        "overall": 1.25
+      }
+    }
+  ]
+}

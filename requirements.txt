@@ -1,0 +1,14 @@
+pandas
+numpy
+python-dotenv
+anthropic
+groq
+scikit-learn
+sentence-transformers
+langdetect
+tqdm
+matplotlib
+seaborn
+pytest
+pyarrow
+kagglehub

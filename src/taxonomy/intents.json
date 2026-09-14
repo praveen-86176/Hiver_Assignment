@@ -1,0 +1,124 @@
+{
+  "intents": [
+    {
+      "id": "battery_power",
+      "label": "Battery & Power Issues",
+      "description": "Customer reporting battery draining fast, phone not charging, unexpected shutdowns, battery percentage jumping, or battery health concerns.",
+      "keywords": ["battery", "drain", "charging", "dies", "shutdown", "power", "battery life", "charging port", "dead"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport my battery is draining so fast after the iOS 11 update. went from 80% to 10% in an hour",
+        "@AppleSupport battery health shows 79% and my phone keeps shutting off randomly. Is this hardware?",
+        "@AppleSupport why does my iPhone 6s die at 30% battery? This started after updating"
+      ]
+    },
+    {
+      "id": "ios_update_glitch",
+      "label": "iOS Update & Software Bug",
+      "description": "Customer reporting bugs, glitches, or performance issues introduced after a software update, or asking when a fix will arrive.",
+      "keywords": ["update", "ios 11", "bug", "glitch", "slow", "laggy", "after update", "since update", "freeze", "crash"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport my phone has been super laggy ever since I updated to iOS 11.1",
+        "@AppleSupport the keyboard 'I' autocorrect bug is driving me insane. When will this be patched?",
+        "Updated to iOS 11 and now my apps keep crashing @AppleSupport please help"
+      ]
+    },
+    {
+      "id": "apple_id_account",
+      "label": "Apple ID & iCloud Account",
+      "description": "Customer locked out of Apple ID, iCloud login issues, two-factor authentication problems, forgotten password, or account security concerns.",
+      "keywords": ["apple id", "icloud", "locked", "password", "account", "sign in", "two factor", "verification", "forgot", "login"],
+      "escalate_if": true,
+      "examples": [
+        "@AppleSupport I got locked out of my Apple ID and the verification code isn't sending to my phone",
+        "@AppleSupport someone hacked my iCloud account, I can see unauthorized sign-ins from another country",
+        "@AppleSupport I forgot my Apple ID password and two-factor is going to a number I no longer have"
+      ]
+    },
+    {
+      "id": "hardware_repair",
+      "label": "Hardware Damage & Repair",
+      "description": "Customer reporting cracked screen, damaged device, water damage, non-functional home/side buttons, or asking about repair costs and warranty.",
+      "keywords": ["screen", "cracked", "broken", "repair", "home button", "warranty", "genius bar", "damage", "water", "physical"],
+      "escalate_if": true,
+      "examples": [
+        "@AppleSupport my home button stopped working completely. Is this covered under warranty?",
+        "@AppleSupport dropped my iPhone X and the screen cracked. What are my repair options?",
+        "@AppleSupport my iPhone got water damaged and now the touch screen is unresponsive"
+      ]
+    },
+    {
+      "id": "app_store_billing",
+      "label": "App Store, Subscriptions & Billing",
+      "description": "Customer charged unexpectedly, subscription cancellation issues, refund requests, app purchase problems, or Apple Pay/billing disputes.",
+      "keywords": ["charge", "refund", "subscription", "billed", "app store", "purchase", "receipt", "cancel", "apple pay", "payment"],
+      "escalate_if": true,
+      "examples": [
+        "@AppleSupport I was charged twice for the same app purchase. Need a refund immediately",
+        "@AppleSupport I cancelled a subscription but still got charged for this month",
+        "@AppleSupport my child made in-app purchases without my permission, how do I get a refund?"
+      ]
+    },
+    {
+      "id": "connectivity_network",
+      "label": "Connectivity & Network Issues",
+      "description": "Customer having Wi-Fi, Bluetooth, mobile data, AirDrop, or cellular connectivity problems on their Apple device.",
+      "keywords": ["wifi", "bluetooth", "cellular", "connection", "airdrop", "internet", "network", "signal", "connect", "hotspot"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport my iPhone keeps dropping Wi-Fi every few minutes. Already reset network settings",
+        "@AppleSupport AirDrop stopped working after the iOS 11 update. My friends' devices aren't showing up",
+        "@AppleSupport Bluetooth audio keeps cutting out on my AirPods when I walk away from my phone"
+      ]
+    },
+    {
+      "id": "device_setup_restore",
+      "label": "Device Setup, Restore & Migration",
+      "description": "Customer setting up a new device, restoring from backup, transferring data between devices, or facing activation issues.",
+      "keywords": ["restore", "backup", "setup", "transfer", "new phone", "migration", "activation", "icloud backup", "reset", "data"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport got a new iPhone X. How do I restore from my iCloud backup without losing photos?",
+        "@AppleSupport my iPhone is stuck on the activation screen after a restore. What should I do?",
+        "@AppleSupport trying to transfer WhatsApp from my old iPhone to new one but the backup keeps failing"
+      ]
+    },
+    {
+      "id": "performance_storage",
+      "label": "Performance, Storage & Memory",
+      "description": "Customer experiencing app crashes, device freezing/not responding, storage full warnings, or asking about optimizing device performance.",
+      "keywords": ["storage", "space", "full", "slow", "freeze", "not responding", "crash", "memory", "RAM", "performance", "lagging"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport my iPhone freezes and becomes completely unresponsive for minutes at a time",
+        "@AppleSupport says I have 0 MB of storage but I've deleted almost everything. How?",
+        "@AppleSupport apps keep crashing randomly on my iPhone 7. Tried restarting multiple times"
+      ]
+    },
+    {
+      "id": "general_inquiry",
+      "label": "General Inquiry & Feature Questions",
+      "description": "Customer asking general how-to questions, feature availability, compatibility questions, or venting frustration without a specific actionable request.",
+      "keywords": ["how to", "how do", "can i", "does it", "feature", "question", "wondering", "available", "compatible", "work"],
+      "escalate_if": false,
+      "examples": [
+        "@AppleSupport does iOS 11 support screen recording natively or do I need a third-party app?",
+        "@AppleSupport is the iPhone X waterproof? What IP rating does it have?",
+        "@AppleSupport how do I enable dark mode? Searched everywhere but can't find it"
+      ]
+    }
+  ],
+  "escalation_policy": {
+    "auto_escalate_intents": ["apple_id_account", "hardware_repair", "app_store_billing"],
+    "conditional_escalate_signals": [
+      "mention of legal action or consumer rights",
+      "explicit anger with threats (threatening to switch brands, sue, or contact media)",
+      "sensitive personal data requested",
+      "device used for medical/safety-critical purposes",
+      "explicit statement of financial loss > $100",
+      "data loss without backup"
+    ],
+    "auto_handle_intents": ["battery_power", "ios_update_glitch", "connectivity_network", "device_setup_restore", "performance_storage", "general_inquiry"]
+  }
+}

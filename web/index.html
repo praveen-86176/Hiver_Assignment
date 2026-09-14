@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple Support AI Agent — Interactive Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-surface: #101726;
+      --bg-card: rgba(22, 30, 49, 0.75);
+      --bg-card-hover: rgba(30, 41, 67, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(99, 102, 241, 0.5);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-apple: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-violet: #8b5cf6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --glow-blue: rgba(56, 189, 248, 0.15);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-apple);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(16, 23, 38, 0.8);
+      padding: 0.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-tab-btn.active {
+      color: var(--text-primary);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(56, 189, 248, 0.2));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: rgba(16, 23, 38, 0.6);
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Headers */
+    .hero-banner {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 650px;
+    }
+
+    .metrics-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .metric-chip {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .metric-chip-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-chip-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-apple);
+      font-family: var(--font-mono);
+    }
+
+    /* Console Grid */
+    .console-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .console-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Glass Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title-text {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Input area */
+    .input-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .tweet-textarea {
+      width: 100%;
+      min-height: 110px;
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      color: var(--text-primary);
+      padding: 1rem;
+      font-size: 0.95rem;
+      font-family: var(--font-sans);
+      resize: vertical;
+      transition: all 0.2s ease;
+      line-height: 1.5;
+    }
+
+    .tweet-textarea:focus {
+      outline: none;
+      border-color: var(--accent-apple);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .prompt-chips-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin: 1rem 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .prompt-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .chip-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-family: var(--font-sans);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chip-btn:hover {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.5rem;
+    }
+
+    .system-selector {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .system-select {
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: var(--font-sans);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .run-btn {
+      background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.3);
+    }
+
+    .run-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
+    }
+
+    .run-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Pipeline Trace Section */
+    .pipeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pipeline-step {
+      background: rgba(10, 15, 26, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .pipeline-step:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(10, 15, 26, 0.7);
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-auto {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-escalate {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .badge-intent {
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      font-family: var(--font-mono);
+    }
+
+    .step-body-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .confidence-meter {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .confidence-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+
+    /* Reply Output Box */
+    .reply-card {
+      background: linear-gradient(135deg, rgba(22, 30, 49, 0.9), rgba(16, 23, 38, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    .reply-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .reply-avatar {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .avatar-meta-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .avatar-meta-handle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .reply-content {
+      font-size: 0.98rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 0.85rem;
+      font-weight: 400;
+    }
+
+    .reply-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .char-limit-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-family: var(--font-sans);
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--text-primary);
+    }
+
+    /* Retrieved Context Snippets */
+    .retrieval-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .retrieval-item {
+      background: rgba(10, 15, 26, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-size: 0.82rem;
+    }
+
+    .retrieval-item-top {
+      display: flex;
+      justify-content: space-between;
+      color: var(--accent-apple);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .retrieval-msg {
+      color: var(--text-secondary);
+      margin-bottom: 0.35rem;
+    }
+
+    .retrieval-reply {
+      color: #cbd5e1;
+      font-style: italic;
+      padding-left: 0.5rem;
+      border-left: 2px solid rgba(56, 189, 248, 0.4);
+    }
+
+    /* Taxonomy Grid */
+    .taxonomy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .intent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .intent-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .intent-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .intent-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .intent-id-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-apple);
+    }
+
+    .intent-desc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .keywords-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: auto;
+    }
+
+    .keyword-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+
+    /* Golden Set Table */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-input {
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: var(--font-sans);
+      width: 260px;
+    }
+
+    .golden-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    .golden-table th {
+      background: rgba(10, 15, 26, 0.6);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .golden-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    .golden-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-primary);
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <a href="#" class="brand-logo">
+      <div class="brand-icon">🍎</div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="brand-title">Apple Support AI Agent</span>
+          <span class="brand-badge">Production Demo</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchTab('console')">
+        <span>⚡</span> Live Console
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('taxonomy')">
+        <span>🏷</span> Intent Taxonomy
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('golden')">
+        <span>🎯</span> Golden Set (200)
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('architecture')">
+        <span>📐</span> Architecture & EDA
+      </button>
+    </div>
+
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      <span>Groq / qwen3.8-27b</span>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <main>
+
+    <!-- TAB 1: LIVE CONSOLE -->
+    <section id="tab-console" class="tab-content active">
+      <div class="hero-banner">
+        <div>
+          <h1 class="hero-title">Interactive AI Support Simulator</h1>
+          <p class="hero-subtitle">
+            Simulates inbound Twitter customer queries for @AppleSupport. The pipeline classifies intent, evaluates deterministic guardrail policies, retrieves historical resolutions (from 74,613 pairs), and drafts grounded responses.
+          </p>
+        </div>
+        <div class="metrics-pills">
+          <div class="metric-chip">
+            <span class="metric-chip-label">Corpus Size</span>
+            <span class="metric-chip-value">74,613</span>
+          </div>
+          <div class="metric-chip">
+            <span class="metric-chip-label">Intents</span>
+            <span class="metric-chip-value">9 Classes</span>
+          </div>
+          <div class="metric-chip">
+            <span class="metric-chip-label">Guardrail Routing</span>
+            <span class="metric-chip-value">Deterministic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-grid">
+        <!-- Left Panel: Inbound Query Input -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text"><span>📨</span> Inbound Customer Tweet</span>
+          </div>
+
+          <label class="input-label" for="customerInput">Customer Message:</label>
+          <textarea 
+            id="customerInput" 
+            class="tweet-textarea" 
+            placeholder="Type a customer tweet here (e.g., @AppleSupport my battery is draining fast after the iOS 11 update)..."
+          >@AppleSupport my battery drains from 100% to 20% in under 3 hours since iOS 11. iPhone 7.</textarea>
+
+          <div class="prompt-chips-label">Quick Test Scenarios:</div>
+          <div class="prompt-chips">
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport my battery drains from 100% to 20% in under 3 hours since iOS 11. iPhone 7.')">
+              🔋 Battery Drain (Auto)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport I got charged twice for the same app purchase. How do I get a refund?')">
+              💳 Billing Refund (Escalate)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport I\'ve been locked out of my Apple ID for 2 days. 2FA verification code isn\'t working.')">
+              🔐 Account Lockout (Escalate)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport my AirPods keep disconnecting from my Mac every 10 minutes. Very frustrating.')">
+              🎧 Bluetooth Glitch (Auto)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport my home button stopped working completely and screen is cracked.')">
+              🔨 Hardware Damage (Escalate)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport I lost all my business data after the update. I will take legal action if not resolved today!')">
+              ⚖️ Legal / Data Threat (Signal Escalate)
+            </button>
+            <button class="chip-btn" onclick="setPrompt('@AppleSupport how do I transfer photos and data from my old iPhone X to new iPhone 14?')">
+              📱 Setup & Migration (Auto)
+            </button>
+          </div>
+
+          <div class="action-row">
+            <div class="system-selector">
+              <label style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">System:</label>
+              <select id="systemSelect" class="system-select">
+                <option value="agent">AI Agent (LLM + Retrieval)</option>
+                <option value="keyword">Keyword Baseline (Heuristic + Canned)</option>
+                <option value="trivial">Trivial Baseline (Single Template)</option>
+              </select>
+            </div>
+            <button id="runBtn" class="run-btn" onclick="runAgentPipeline()">
+              <span id="runBtnIcon">⚡</span>
+              <span id="runBtnText">Run Agent</span>
+            </button>
+          </div>
+
+          <!-- Retrieved Context -->
+          <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-subtle); padding-top: 1.25rem;">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: flex; align-items: center; justify-content: space-between;">
+              <span>🔍 Retrieved Grounding Resolutions (Top-3 TF-IDF)</span>
+              <span id="retrievalCountBadge" style="font-size: 0.72rem; color: var(--accent-apple); font-family: var(--font-mono);">74.6k index</span>
+            </div>
+            <div id="retrievalList" class="retrieval-list">
+              <div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;">
+                Run the agent to inspect retrieved historical resolution pairs.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Agent Pipeline Execution Trace -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-title-text"><span>⚙️</span> Execution Pipeline Trace</span>
+            <span id="latencyBadge" style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--accent-emerald);">Ready</span>
+          </div>
+
+          <div class="pipeline-container">
+            <!-- Step 1: Classification -->
+            <div class="pipeline-step">
+              <div class="step-header">
+                <span class="step-title">1. Intent Classification</span>
+                <span id="intentBadge" class="badge badge-intent">—</span>
+              </div>
+              <p id="intentReasoning" class="step-body-text">Waiting for input...</p>
+              <div class="confidence-meter">
+                <div id="confidenceBar" class="confidence-bar"></div>
+              </div>
+            </div>
+
+            <!-- Step 2: Routing -->
+            <div class="pipeline-step">
+              <div class="step-header">
+                <span class="step-title">2. Guardrail & Routing Decision</span>
+                <span id="routingBadge" class="badge badge-auto">—</span>
+              </div>
+              <p id="routingBasis" class="step-body-text">Evaluates deterministic policies and safety signals.</p>
+              <div id="signalsContainer" style="margin-top: 0.4rem; display: flex; gap: 0.3rem; flex-wrap: wrap;"></div>
+            </div>
+
+            <!-- Step 3: Response -->
+            <div class="reply-card">
+              <div class="reply-header">
+                <div class="reply-avatar">
+                  <div class="avatar-circle">🍎</div>
+                  <div>
+                    <div class="avatar-meta-name">Apple Support</div>
+                    <div class="avatar-meta-handle">@AppleSupport</div>
+                  </div>
+                </div>
+                <button class="copy-btn" onclick="copyReplyText()">📋 Copy</button>
+              </div>
+
+              <div id="replyText" class="reply-content">
+                Reply will be generated here upon running the agent...
+              </div>
+
+              <div class="reply-footer">
+                <div class="char-limit-indicator">
+                  <span>Chars: <strong id="charCount" style="color: var(--accent-apple);">0</strong>/280</span>
+                </div>
+                <div id="replyModeIndicator" style="font-weight: 600; color: var(--text-muted);">
+                  Status: Idle
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: TAXONOMY -->
+    <section id="tab-taxonomy" class="tab-content">
+      <div class="hero-banner">
+        <div>
+          <h1 class="hero-title">Empirical Intent Taxonomy (9 Intents)</h1>
+          <p class="hero-subtitle">
+            Derived via TF-IDF vectorization and K-Means clustering on 10,000 real @AppleSupport customer conversations. 3 intents are hard-escalated to human teams; others auto-handled with conditional safety guardrails.
+          </p>
+        </div>
+      </div>
+      <div id="taxonomyGrid" class="taxonomy-grid">
+        <!-- Loaded dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 3: GOLDEN SET -->
+    <section id="tab-golden" class="tab-content">
+      <div class="hero-banner">
+        <div>
+          <h1 class="hero-title">Golden Evaluation Benchmark (200 Samples)</h1>
+          <p class="hero-subtitle">
+            Stratified evaluation sample combining edge-case low confidence samples, deliberate escalation coverage, and proportional per-intent distribution.
+          </p>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-toolbar">
+          <input 
+            type="text" 
+            id="goldenSearchInput" 
+            class="search-input" 
+            placeholder="Search customer tweet or intent..." 
+            oninput="filterGoldenTable()"
+          />
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            Showing <strong id="goldenCount" style="color: var(--text-primary);">200</strong> test cases
+          </div>
+        </div>
+        <div style="max-height: 600px; overflow-y: auto;">
+          <table class="golden-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">#</th>
+                <th style="width: 140px;">Intent</th>
+                <th style="width: 100px;">Routing</th>
+                <th>Customer Message</th>
+                <th>Ground Truth Brand Reply</th>
+              </tr>
+            </thead>
+            <tbody id="goldenTableBody">
+              <!-- Filled via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: ARCHITECTURE & EDA -->
+    <section id="tab-architecture" class="tab-content">
+      <div class="hero-banner">
+        <div>
+          <h1 class="hero-title">Architecture, EDA & Design Decisions</h1>
+          <p class="hero-subtitle">
+            System design rationale, data-driven brand justification for @AppleSupport, and comparison against alternative architectures.
+          </p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="card">
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-apple);">
+            Brand Selection: @AppleSupport
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6;">
+            We conducted full exploratory data analysis across 108 brands in Kaggle's 2.8M-tweet dataset. @AppleSupport was selected based on 4 empirical criteria:
+          </p>
+          <ul style="color: var(--text-secondary); font-size: 0.88rem; padding-left: 1.25rem; line-height: 1.7;">
+            <li><strong>Highest Resolved Pairs:</strong> 74,613 thread pairs (highest in dataset).</li>
+            <li><strong>English Purity:</strong> 93.8% English messages (vs. 87.4% for AmazonHelp).</li>
+            <li><strong>Technical Diagnostic Richness:</strong> Rich spectrum spanning OS update glitches, hardware defects, battery degradation, and account security.</li>
+            <li><strong>Concise Tone:</strong> Average reply length of 118 chars, fitting Twitter constraints perfectly.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-indigo);">
+            Architecture & Deterministic Guardrails
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6;">
+            <strong>Why deterministic routing instead of LLM routing?</strong>
+          </p>
+          <ul style="color: var(--text-secondary); font-size: 0.88rem; padding-left: 1.25rem; line-height: 1.7;">
+            <li><strong>Zero Routing Inference Cost:</strong> 100% of routing decisions run via policy rules in &lt;1ms.</li>
+            <li><strong>Auditable Compliance:</strong> Account lockouts, financial refunds, and legal threats are strictly routed to humans with zero hallucination risk.</li>
+            <li><strong>Sublinear TF Retrieval:</strong> 15,000-feature TF-IDF index retrieves top-3 matching resolutions in &lt;30ms.</li>
+            <li><strong>LLM Grounded Drafting:</strong> The LLM is only called for auto-handle drafts, grounded with retrieved past resolutions.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let goldenData = [];
+    let taxonomyData = {};
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(sec => sec.classList.remove('active'));
+      
+      const targetBtn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+      
+      const targetSec = document.getElementById('tab-' + tabId);
+      if (targetSec) targetSec.classList.add('active');
+    }
+
+    function setPrompt(text) {
+      document.getElementById('customerInput').value = text;
+    }
+
+    async function runAgentPipeline() {
+      const msg = document.getElementById('customerInput').value.trim();
+      const system = document.getElementById('systemSelect').value;
+      const runBtn = document.getElementById('runBtn');
+      const runBtnText = document.getElementById('runBtnText');
+      const runBtnIcon = document.getElementById('runBtnIcon');
+
+      if (!msg) return;
+
+      runBtn.disabled = true;
+      runBtnIcon.innerHTML = '<div class="spinner"></div>';
+      runBtnText.innerText = 'Processing...';
+
+      try {
+        const res = await fetch('/api/run_agent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg, system: system })
+        });
+        const data = await res.json();
+        renderPipelineResult(data);
+      } catch (err) {
+        alert('Error running agent: ' + err.message);
+      } finally {
+        runBtn.disabled = false;
+        runBtnIcon.innerText = '⚡';
+        runBtnText.innerText = 'Run Agent';
+      }
+    }
+
+    function renderPipelineResult(data) {
+      // Classification
+      const c = data.classification || {};
+      document.getElementById('intentBadge').innerText = c.intent || 'unknown';
+      document.getElementById('intentReasoning').innerText = c.reasoning || 'Heuristic / baseline classification';
+      const conf = Math.round((c.confidence || 0) * 100);
+      document.getElementById('confidenceBar').style.width = conf + '%';
+
+      // Routing
+      const r = data.routing || {};
+      const isEscalate = r.decision === 'escalate';
+      const rBadge = document.getElementById('routingBadge');
+      rBadge.className = 'badge ' + (isEscalate ? 'badge-escalate' : 'badge-auto');
+      rBadge.innerText = isEscalate ? '🚨 ESCALATE TO HUMAN' : '✅ AUTO-HANDLE';
+      document.getElementById('routingBasis').innerText = r.policy_basis || '';
+
+      const sigContainer = document.getElementById('signalsContainer');
+      sigContainer.innerHTML = '';
+      if (r.triggered_signals && r.triggered_signals.length > 0) {
+        r.triggered_signals.forEach(sig => {
+          const sBadge = document.createElement('span');
+          sBadge.className = 'badge badge-escalate';
+          sBadge.style.fontSize = '0.7rem';
+          sBadge.innerText = 'Signal: ' + sig;
+          sigContainer.appendChild(sBadge);
+        });
+      }
+
+      // Latency
+      const latency = data.latency_s || data.elapsed_total || 0;
+      document.getElementById('latencyBadge').innerText = `⏱ ${latency}s`;
+
+      // Reply
+      const reply = data.reply || '';
+      document.getElementById('replyText').innerText = reply;
+      document.getElementById('charCount').innerText = reply.length;
+      document.getElementById('replyModeIndicator').innerText = isEscalate 
+        ? 'Status: Queued for Tier-2 Agent' 
+        : 'Status: Ready to Dispatch';
+
+      // Retrieved Context
+      const retList = document.getElementById('retrievalList');
+      retList.innerHTML = '';
+      if (data.retrieved_pairs && data.retrieved_pairs.length > 0) {
+        data.retrieved_pairs.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'retrieval-item';
+          div.innerHTML = `
+            <div class="retrieval-item-top">
+              <span>Example #${item.rank} (Thread ${item.thread_id})</span>
+              <span>Sim: ${(item.similarity * 100).toFixed(1)}%</span>
+            </div>
+            <div class="retrieval-msg"><strong>Cust:</strong> ${escapeHtml(item.customer_message)}</div>
+            <div class="retrieval-reply"><strong>Apple:</strong> ${escapeHtml(item.brand_reply)}</div>
+          `;
+          retList.appendChild(div);
+        });
+      } else {
+        retList.innerHTML = '<div style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 0.5rem;">No retrieval step (Baseline system).</div>';
+      }
+    }
+
+    function copyReplyText() {
+      const text = document.getElementById('replyText').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.querySelector('.copy-btn');
+      btn.innerText = '✅ Copied!';
+      setTimeout(() => btn.innerText = '📋 Copy', 2000);
+    }
+
+    async function loadTaxonomy() {
+      try {
+        const res = await fetch('/api/taxonomy');
+        taxonomyData = await res.json();
+        const grid = document.getElementById('taxonomyGrid');
+        grid.innerHTML = '';
+        
+        taxonomyData.intents.forEach(intent => {
+          const card = document.createElement('div');
+          card.className = 'intent-card';
+          card.innerHTML = `
+            <div class="intent-top">
+              <div>
+                <div class="intent-name">${intent.label}</div>
+                <div class="intent-id-tag">${intent.id}</div>
+              </div>
+              <span class="badge ${intent.escalate_if ? 'badge-escalate' : 'badge-auto'}">
+                ${intent.escalate_if ? '🚨 Escalate' : '✅ Auto-handle'}
+              </span>
+            </div>
+            <p class="intent-desc">${intent.description}</p>
+            <div class="keywords-wrap">
+              ${intent.keywords.map(kw => `<span class="keyword-pill">${kw}</span>`).join('')}
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error('Failed to load taxonomy', e);
+      }
+    }
+
+    async function loadGoldenSet() {
+      try {
+        const res = await fetch('/api/golden_set');
+        goldenData = await res.json();
+        renderGoldenTable(goldenData);
+      } catch (e) {
+        console.error('Failed to load golden set', e);
+      }
+    }
+
+    function renderGoldenTable(data) {
+      const tbody = document.getElementById('goldenTableBody');
+      tbody.innerHTML = '';
+      document.getElementById('goldenCount').innerText = data.length;
+
+      data.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        const isEsc = item.routing_decision === 'escalate';
+        tr.innerHTML = `
+          <td><span style="font-family: var(--font-mono); color: var(--text-muted);">${item.id}</span></td>
+          <td><span class="badge badge-intent" style="font-size: 0.72rem;">${item.intent}</span></td>
+          <td><span class="badge ${isEsc ? 'badge-escalate' : 'badge-auto'}" style="font-size: 0.72rem;">${item.routing_decision}</span></td>
+          <td style="color: var(--text-primary); max-width: 320px;">${escapeHtml(item.customer_message)}</td>
+          <td style="max-width: 320px; font-style: italic;">${escapeHtml(item.brand_reply_reference)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterGoldenTable() {
+      const q = document.getElementById('goldenSearchInput').value.toLowerCase();
+      const filtered = goldenData.filter(d => 
+        d.customer_message.toLowerCase().includes(q) || 
+        d.intent.toLowerCase().includes(q) || 
+        d.routing_decision.toLowerCase().includes(q)
+      );
+      renderGoldenTable(filtered);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      loadTaxonomy();
+      loadGoldenSet();
+    });
+  </script>
+</body>
+</html>
